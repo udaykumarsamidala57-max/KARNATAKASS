@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.dao.OrganizationDao;
 import com.example.demo.dao.ScholarshipDao;
 import com.example.demo.entity.Scholarship;
@@ -25,6 +25,13 @@ public class ScholarshipController {
     @Autowired
     private ScholarshipDao scholarshipDao;
 
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+        return "Railway is working";
+    }
+
+    
     @GetMapping("/")
     public String scholarshipForm(Model model) {
         model.addAttribute("orgList", organizationDao.findByStatusOrderByOrgName("Active"));
