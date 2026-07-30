@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dao.OrganizationDao;
 import com.example.demo.dao.ScholarshipDao;
+import com.example.demo.entity.Organization;
 import com.example.demo.entity.Scholarship;
 
 @Controller
@@ -33,28 +35,50 @@ public class ScholarshipController {
         return "Railway is working";
     }
 
-    // Scholarship Form
+    // Home Page
     @GetMapping("/")
     public String home(Model model) {
 
-        model.addAttribute("scholarship", new Scholarship());
+        try {
 
-        model.addAttribute("orgList",
-                organizationDao.findByStatusOrderByOrgName("Active"));
+            List<Organization> orgList =
+                    organizationDao.findByStatusOrderByOrgName("Active");
 
-        return "ScholarshipForm";
+            System.out.println("Organization Count : " + orgList.size());
+
+            model.addAttribute("scholarship", new Scholarship());
+            model.addAttribute("orgList", orgList);
+
+            return "ScholarshipForm";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return "test";
+        }
     }
 
     // Optional URL
     @GetMapping("/form")
     public String form(Model model) {
 
-        model.addAttribute("scholarship", new Scholarship());
+        try {
 
-        model.addAttribute("orgList",
-                organizationDao.findByStatusOrderByOrgName("Active"));
+            List<Organization> orgList =
+                    organizationDao.findByStatusOrderByOrgName("Active");
 
-        return "ScholarshipForm";
+            model.addAttribute("scholarship", new Scholarship());
+            model.addAttribute("orgList", orgList);
+
+            return "ScholarshipForm";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return "test";
+        }
     }
 
     // Save Scholarship
@@ -89,14 +113,13 @@ public class ScholarshipController {
 
         } catch (IOException e) {
 
+            e.printStackTrace();
+
             redirectAttributes.addFlashAttribute(
                     "errorMessage",
                     "File upload failed.");
-
-            e.printStackTrace();
         }
 
         return "redirect:/";
     }
-
 }
