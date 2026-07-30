@@ -32,7 +32,7 @@ public class ScholarshipController {
     }
 
     
-    @GetMapping("/")
+    @GetMapping("/form")
     public String scholarshipForm(Model model) {
         model.addAttribute("orgList", organizationDao.findByStatusOrderByOrgName("Active"));
         return "SholarshipForm";
