@@ -438,7 +438,7 @@
         </div>
 
         <div class="form-group">
-          <label>Previous Academic Year (%)</label>
+          <label>Previous Academic Year P(%)</label>
           <input type="number" step="0.01" name="previousAyPercentage" placeholder="e.g. 85.50">
         </div>
 
