@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -317,8 +314,9 @@
 </head>
 <body>
 
+<!-- Replaces <%@ include file="header.jsp" %> -->
+<div th:replace="~{header :: header}"></div>
 
-<%@ include file="header.jsp" %>
 <div class="page-layout">
 
   <!-- LEFT SIDE: MAIN FORM CONTAINER -->
@@ -329,19 +327,22 @@
       <p>Please fill in all mandatory details accurately</p>
     </div>
 
-    <form action="${pageContext.request.contextPath}/saveScholarship" method="post" class="form-body">
+    <!-- Replaces ${pageContext.request.contextPath}/saveScholarship -->
+    <form th:action="@{/saveScholarship}" method="post" class="form-body">
 
       <!-- Section 1: Employment Details -->
       <div class="section-title">1. Employee Details</div>
       <div class="form-grid">
         <div class="form-group full-width">
           <label>Organization Name <span class="required">*</span></label>
+          <!-- Replaces <c:forEach> dynamic options loop -->
           <select name="orgName" required>
-  <option value="">-- Select Organization --</option>
-  <c:forEach var="org" items="${orgList}">
-    <option value="${org.orgName}">${org.orgName}</option>
-  </c:forEach>
-</select>
+            <option value="">-- Select Organization --</option>
+            <option th:each="org : ${orgList}" 
+                    th:value="${org.orgName}" 
+                    th:text="${org.orgName}">
+            </option>
+          </select>
         </div>
 
         <div class="form-group">
